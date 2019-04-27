@@ -7,7 +7,7 @@ import Filter from './Filter'
 const Menu = (props) => {
   return (
     <div>
-      <Navbar className='indigo' brand='my-stash' right>
+      <Navbar className='indigo' href={process.env.PUBLIC_URL + '/'} brand='mystash' right>
         <IndexLinkContainer to={process.env.PUBLIC_URL + '/'}>
           <NavItem eventkey={1}><Icon>view_list</Icon></NavItem>
         </IndexLinkContainer>

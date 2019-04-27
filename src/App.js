@@ -51,19 +51,18 @@ const App = (props) => {
   }
 
   if (state.logged === 1) {
-    const publicUrl = process.env.PUBLIC_URL
     return (
       <div>
         <Notification />
-        <Router>
+        <Router basename={process.env.PUBLIC_URL}>
           <div>
             <Menu currentPage={state.navigation} filter={filter} handleLogout={handleLogout} />
-            <Route exact path={`${publicUrl}/`} render={() => <List notes={props.notes} filter={filter} />} />
-            <Route path={`${publicUrl}/login`} render={() => <Login />} />
-            <Route path={`${publicUrl}/create`} render={() => <Form />} />
-            <Route path={`${publicUrl}/settings`} render={() => <Settings />} />
-            <Route exact path={`${publicUrl}/notes/:id`} component={Show} />
-            <Route exact path={`${publicUrl}/notes/edit/:id`} component={Edit} />
+            <Route exact path="/" render={() => <List notes={props.notes} filter={filter} />} />
+            <Route path="/login" render={() => <Login />} />
+            <Route path="/create" render={() => <Form />} />
+            <Route path="/settings" render={() => <Settings />} />
+            <Route exact path="/notes/:id" component={Show} />
+            <Route exact path="/notes/edit/:id" component={Edit} />
           </div>
         </Router>
       </div>
