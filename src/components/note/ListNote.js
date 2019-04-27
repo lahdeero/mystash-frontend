@@ -18,7 +18,7 @@ const ListNote = (props) => {
     <div className={css}>
       <Row>
         <Col>
-          <Link to={`/notes/${note.id}`}> <span s={12} className='blue-text text-darken-2'>{note.title} </span> </Link>
+          <Link to={`${process.env.PUBLIC_URL}/notes/${note.id}`}> <span s={12} className='blue-text text-darken-2'>{note.title} </span> </Link>
         </Col>
         <Col>
           {tags.join(',').split(',').map(tag =>

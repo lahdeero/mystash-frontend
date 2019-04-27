@@ -56,7 +56,7 @@ class Show extends React.Component {
     }
     const tags = this.state.tags.join()
     const text = this.state.content
-    const editaddress = '/notes/edit/' + this.state.id
+    const editaddress = process.env.PUBLIC_URL + '/notes/edit/' + this.state.id
 
     return (
       <div className="container">
