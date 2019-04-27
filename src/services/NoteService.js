@@ -12,7 +12,6 @@ const setToken = (newToken) => {
   config = { headers: { 'Authorization': token } }
 }
 
-// REMEMBER ALWAYS TO ADD EXPORT DEFAULT!!!!!!!!!
 const getAll = async () => {
   const response = await API.get(baseUrl + '/all', config)
   return response.data
