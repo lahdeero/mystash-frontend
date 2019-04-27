@@ -1,5 +1,8 @@
 import API from 'axios'
-const baseUrl = '/api/'
+import { resolveUrl } from '../utils/environmentResolvers'
+
+const backendUrl = resolveUrl()
+const baseUrl = backendUrl + '/api/'
 
 const register = async (information) => {
   const response = await API.post(baseUrl + 'register', information)

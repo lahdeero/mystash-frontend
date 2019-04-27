@@ -1,5 +1,8 @@
 import axios from 'axios'
-const baseUrl = '/api/systeminfo'
+import { resolveUrl } from '../utils/environmentResolvers'
+
+const backendUrl = resolveUrl()
+const baseUrl = backendUrl + '/api/systeminfo'
 
 const getAll = () => {
   const request = axios.get(baseUrl)

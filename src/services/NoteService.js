@@ -1,6 +1,8 @@
 import API from 'axios'
+import { resolveUrl } from '../utils/environmentResolvers'
 
-const baseUrl = '/api/notes/directory'
+const backendUrl = resolveUrl()
+const baseUrl = backendUrl + '/api/notes/directory'
 
 let token = null
 let config = {}
