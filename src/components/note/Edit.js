@@ -105,7 +105,7 @@ class Edit extends React.Component {
 
   render() {
     if (this.state.redirect) {
-      const redirecturl = process.env.PUBLIC_URL + '/' // 'notes/' + this.state.id
+      const redirecturl = '/' // 'notes/' + this.state.id
       return <div><Redirect to={redirecturl} /></div>
     }
 
