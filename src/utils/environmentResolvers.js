@@ -1,5 +1,5 @@
 export function resolveUrl() {
   const host = window.location.host
   console.log('host = ', host)
-  return host === 'lahdeero.github.io' ? 'https://my-stash.herokuapp.com' : 'http://Localhost:3001'
+  return host === 'localhost:3000' ? 'http://Localhost:3001' : 'https://my-stash.herokuapp.com'
 }
