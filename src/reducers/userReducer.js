@@ -16,32 +16,32 @@ const userReducer = (store = null, action) => {
 
 export const actionForRegister = (information) => {
   return async () => {
-    const tokenAndMessage = await loginService.register(information)
-    return tokenAndMessage
+    const response = await loginService.register(information)
+    window.localStorage.setItem('MS_token', response)
+    return response
   }
 }
 
-export const setLogin = (user) => {
-  noteService.setToken(user.token)
-  console.log(user)
+export const setLogin = (token) => {
+  noteService.setToken(token)
   return async (dispatch) => {
     dispatch({
       type: 'NOTHING',
-      data: user
+      data: token
     })
   }
 }
 
 export const actionForLogin = (creditentals) => {
+  console.log('action for login..')
   return async (dispatch) => {
     const response = await loginService.login(creditentals)
-    await noteService.setToken(response.token)
-    await window.localStorage.setItem('loggedMystashappUser', JSON.stringify({ token: response.token }))
+    console.log('response: ', response)
+    window.localStorage.setItem('MS_token', response)
     dispatch({
       type: 'LOGIN',
-      data: response.user
+      data: 'logged'
     })
-    return response.user
   }
 }
 
