@@ -3,9 +3,8 @@ import noteService from '../services/NoteService.js'
 const noteReducer = (store = [], action) => {
   switch (action.type) {
     case 'CREATE':
-      let newStore = store
-      newStore.unshift(action.data) // unshift returns new length of array
-      return newStore
+      return [action.data,
+        ...store.slice(0, store.length)]
     case 'MODIFY':
       return store.map(note => (note.id === action.data[0].id) ? action.data[0] : note)
     case 'REMOVE':
@@ -13,7 +12,7 @@ const noteReducer = (store = [], action) => {
     case 'INIT_NOTES':
       return action.data
     case 'CLEAR':
-      return (store = [])
+      return []
     default:
       return store
   }
@@ -74,7 +73,7 @@ export const removeNote = (id) => {
     const delId = await noteService.erase(id)
     dispatch({
       type: 'REMOVE',
-      data: id
+      data: delId
     })
     return delId
   }
