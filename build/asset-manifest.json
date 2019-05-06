@@ -1,13 +1,13 @@
 {
-  "main.css": "/mystash-frontend/static/css/main.0bfc2b1f.chunk.css",
-  "main.js": "/mystash-frontend/static/js/main.c0ff549c.chunk.js",
-  "main.js.map": "/mystash-frontend/static/js/main.c0ff549c.chunk.js.map",
+  "main.css": "/mystash-frontend/static/css/main.0ba2f37c.chunk.css",
+  "main.js": "/mystash-frontend/static/js/main.1bfb88b1.chunk.js",
+  "main.js.map": "/mystash-frontend/static/js/main.1bfb88b1.chunk.js.map",
   "runtime~main.js": "/mystash-frontend/static/js/runtime~main.4f84a99e.js",
   "runtime~main.js.map": "/mystash-frontend/static/js/runtime~main.4f84a99e.js.map",
-  "static/js/2.32c36bf1.chunk.js": "/mystash-frontend/static/js/2.32c36bf1.chunk.js",
-  "static/js/2.32c36bf1.chunk.js.map": "/mystash-frontend/static/js/2.32c36bf1.chunk.js.map",
+  "static/js/2.e8a78698.chunk.js": "/mystash-frontend/static/js/2.e8a78698.chunk.js",
+  "static/js/2.e8a78698.chunk.js.map": "/mystash-frontend/static/js/2.e8a78698.chunk.js.map",
   "index.html": "/mystash-frontend/index.html",
-  "precache-manifest.c499a7f6260552b6406a5f9046d77a3a.js": "/mystash-frontend/precache-manifest.c499a7f6260552b6406a5f9046d77a3a.js",
+  "precache-manifest.5818ee639364f0232977f8c088cacaad.js": "/mystash-frontend/precache-manifest.5818ee639364f0232977f8c088cacaad.js",
   "service-worker.js": "/mystash-frontend/service-worker.js",
-  "static/css/main.0bfc2b1f.chunk.css.map": "/mystash-frontend/static/css/main.0bfc2b1f.chunk.css.map"
+  "static/css/main.0ba2f37c.chunk.css.map": "/mystash-frontend/static/css/main.0ba2f37c.chunk.css.map"
 }

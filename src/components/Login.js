@@ -40,7 +40,7 @@ const Login = (props) => {
   }
   return (
     <div>
-      <Navbar className="indigo" brand='mystash' right>
+      <Navbar className="indigo" brand='mystash' href={process.env.PUBLIC_URL} right>
       </Navbar>
       <div className="container centered">
         {error !== '' ? <div className="error">{error}</div> : <div></div>}
