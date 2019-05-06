@@ -12,7 +12,6 @@ import Form from './components/note/Form'
 import Settings from './components/Settings'
 import Notification from './components/Notification'
 import { noteInitialization, clearNotes } from './reducers/noteReducer'
-import noteService from './services/NoteService'
 import { actionForLogin, setLogin, actionForLogout } from './reducers/userReducer'
 import useFilter from './hooks/useFilter'
 
@@ -21,29 +20,24 @@ const App = (props) => {
   const [state, setState] = useState({ user: null, notes: [], navigation: 0, logged: 0 })
 
   useEffect(() => {
-    const loggedUserJSON = window.localStorage.getItem('loggedMystashappUser')
+    const loggedUserJSON = window.localStorage.getItem('MS_token')
     if (state.logged === 0 && loggedUserJSON) {
-      init(loggedUserJSON)
+      init()
     }
   })
 
-  const init = async (loggedUserJSON) => {
-    // const user = JSON.parse(loggedUserJSON)
-    const user = props.user
+  const init = async () => {
     await setState({
-      user: user,
       notes: [],
       navigation: 1,
       logged: 1
     })
-    // await props.setLogin(user)
-    await noteService.setToken(JSON.parse(loggedUserJSON).token)
-    await props.noteInitialization(user)
+    props.noteInitialization()
   }
 
   const handleLogout = (event) => {
     event.preventDefault()
-    window.localStorage.removeItem('loggedMystashappUser')
+    window.localStorage.removeItem('MS_token')
     filter.setFilter('')
     props.clearNotes()
     props.actionForLogout()
@@ -68,7 +62,7 @@ const App = (props) => {
       </div>
     )
   } else {
-    return <div><Login actionForLogin={props.actionForLogin} noteInitialization={props.noteInitialization} /></div>
+    return <div><Login actionForLogin={props.actionForLogin} init={init} noteInitialization={props.noteInitialization} /></div>
   }
 }
 

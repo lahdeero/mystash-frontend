@@ -12,38 +12,23 @@ const Register = (props) => {
   const [error, setError] = useState('')
   const [redirect, setRedirect] = useState(false)
 
-  const validateInput = () => {
-    if (username.length < 3) {
-      setError('usename must be atleast 3 characters')
-      setTimeout(() => { setError('') }, 5000)
-      return false
-    } else if (password.length < 6) {
-      setError('password must be atleast 6 characters')
-      setTimeout(() => { setError('') }, 5000)
-      return false
-    }
-    return true
-  }
   const handleRegister = async (event) => {
     event.preventDefault()
-    if (validateInput()) {
-      try {
-        const tokenAndMessage = await props.actionForRegister({
-          realname: firstname + ' ' + lastname,
-          username: username,
-          password: password,
-          email: email
-        })
-        const user = tokenAndMessage[0]
-        await window.localStorage.setItem('loggedMystashappUser', JSON.stringify(user))
-        await setRedirect(true)
-        await props.setLogin(user) // must be last line, activates App.js to "reload"
-      } catch (exception) {
-        setError('Username not available')
-        setTimeout(() => {
-          setError('')
-        }, 5000)
-      }
+    try {
+      const token = await props.init({
+        realname: firstname + ' ' + lastname,
+        username: username,
+        password: password,
+        email: email
+      })
+      console.log('token after register: ', token)
+      setRedirect(true)
+      props.actionForLogin() // must be last line, activates App.js to "reload"
+    } catch (exception) {
+      setError('Username not available')
+      setTimeout(() => {
+        setError('')
+      }, 5000)
     }
   }
 

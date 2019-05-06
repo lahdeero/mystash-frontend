@@ -42,16 +42,17 @@ class Show extends React.Component {
       const delId = await this.props.removeNote(this.state.id)
       console.log('DEL ID = ' + delId)
       if (typeof (delId) === 'number') {
-        await this.props.notify(`you deleted '${this.state.title}'`, 10)
-        await this.setState({ redirect: true })
+        this.props.notify(`you deleted '${this.state.title}'`, 10)
+        this.setState({ redirect: true })
       }
     }
   }
 
   render() {
     if (this.state.redirect) {
+      console.log('redirektaa')
       return (
-        <div><Redirect to='/' /></div>
+        <div><Redirect to={process.env.PUBLIC_URL} /></div>
       )
     }
     const tags = this.state.tags.join()
