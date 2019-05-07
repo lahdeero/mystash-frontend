@@ -51,12 +51,12 @@ const App = (props) => {
         <Router basename={process.env.PUBLIC_URL}>
           <div>
             <Menu currentPage={state.navigation} filter={filter} handleLogout={handleLogout} />
-            <Route exact path="/" render={() => <List notes={props.notes} filter={filter} />} />
-            <Route path="/login" render={() => <Login />} />
-            <Route path="/create" render={() => <Form />} />
-            <Route path="/settings" render={() => <Settings />} />
-            <Route exact path="/notes/:id" component={Show} />
-            <Route exact path="/notes/edit/:id" component={Edit} />
+            <Route exact path='/' render={() => <List notes={props.notes} filter={filter} />} />
+            <Route path='/login' render={() => <Login />} />
+            <Route path='/create' render={() => <Form />} />
+            <Route path='/settings' render={() => <Settings />} />
+            <Route exact path='/notes/:id' component={Show} />
+            <Route exact path='/notes/edit/:id' component={Edit} />
           </div>
         </Router>
       </div>
