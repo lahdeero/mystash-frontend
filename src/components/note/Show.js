@@ -52,12 +52,11 @@ class Show extends React.Component {
     if (this.state.redirect) {
       console.log('redirektaa')
       return (
-        <div><Redirect to={process.env.PUBLIC_URL} /></div>
+        <div><Redirect to='/' /></div>
       )
     }
     const tags = this.state.tags.join()
     const text = this.state.content
-    const editaddress = process.env.PUBLIC_URL + '/notes/edit/' + this.state.id
 
     return (
       <div className="container">
@@ -74,7 +73,7 @@ class Show extends React.Component {
           })}
         </div>
         <div>
-          <Link to={editaddress}>
+          <Link to={`/notes/edit/${this.state.id}'`}>
             <Button className="deep orange">EDIT</Button>&nbsp;
           </Link>
           <Button className="red accent-2" onClick={this.deleteNote} >DELETE</Button>
