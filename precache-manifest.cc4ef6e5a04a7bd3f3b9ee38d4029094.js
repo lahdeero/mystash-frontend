@@ -1,11 +1,11 @@
 self.__precacheManifest = [
   {
-    "revision": "3cf229d619a26290dfa7",
+    "revision": "183a2ea00435c7682b44",
     "url": "/mystash-frontend/static/css/main.0ba2f37c.chunk.css"
   },
   {
-    "revision": "3cf229d619a26290dfa7",
-    "url": "/mystash-frontend/static/js/main.3cf229d6.chunk.js"
+    "revision": "183a2ea00435c7682b44",
+    "url": "/mystash-frontend/static/js/main.183a2ea0.chunk.js"
   },
   {
     "revision": "4f84a99ee6ef8222e916",
@@ -16,7 +16,7 @@ self.__precacheManifest = [
     "url": "/mystash-frontend/static/js/2.e8a78698.chunk.js"
   },
   {
-    "revision": "38a1f0d58005ec3c7b3583cd10dd9e65",
+    "revision": "3e74dbd9b34ba010173bcd186be7e9a0",
     "url": "/mystash-frontend/index.html"
   }
 ];
