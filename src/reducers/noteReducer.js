@@ -52,7 +52,7 @@ export const createNote = (noteObject) => {
       type: 'CREATE',
       data: savedNoteObject[0]
     })
-    return savedNoteObject[0].id
+    return savedNoteObject[0]
   }
 }
 
