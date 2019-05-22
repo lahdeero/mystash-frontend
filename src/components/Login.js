@@ -11,7 +11,9 @@ const Login = (props) => {
 
   const handleLogin = async (event) => {
     event.preventDefault()
+    console.log('should handle login..')
     try {
+      console.log('handles login...')
       await props.actionForLogin({
         username: username,
         password: password
@@ -32,13 +34,13 @@ const Login = (props) => {
   if (register) {
     return (
       <div>
-        <Register handleRegisterRedirect={handleRegisterRedirect} />
+        <Register init={props.init} />
       </div>
     )
   }
   return (
     <div>
-      <Navbar className="indigo" brand='my-stash' right>
+      <Navbar className="indigo" brand='mystash' href={process.env.PUBLIC_URL} right>
       </Navbar>
       <div className="container centered">
         {error !== '' ? <div className="error">{error}</div> : <div></div>}

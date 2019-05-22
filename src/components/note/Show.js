@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Button } from 'react-materialize'
-import { Redirect, Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 import noteService from '../../services/NoteService.js'
 import { removeNote } from '../../reducers/noteReducer'
@@ -30,9 +30,7 @@ class Show extends React.Component {
       })
     } catch (eception) {
       this.props.errormessage(`Couldn't find note '${this.props.match.params.id}'`, 5)
-      this.setState({
-        redirect: true
-      })
+      this.props.history.push('/')
     }
   }
 
@@ -42,21 +40,15 @@ class Show extends React.Component {
       const delId = await this.props.removeNote(this.state.id)
       console.log('DEL ID = ' + delId)
       if (typeof (delId) === 'number') {
-        await this.props.notify(`you deleted '${this.state.title}'`, 10)
-        await this.setState({ redirect: true })
+        this.props.notify(`you deleted '${this.state.title}'`, 10)
+        this.props.history.push('/')
       }
     }
   }
 
   render() {
-    if (this.state.redirect) {
-      return (
-        <div><Redirect to='/' /></div>
-      )
-    }
     const tags = this.state.tags.join()
     const text = this.state.content
-    const editaddress = '/notes/edit/' + this.state.id
 
     return (
       <div className="container">
@@ -73,7 +65,7 @@ class Show extends React.Component {
           })}
         </div>
         <div>
-          <Link to={editaddress}>
+          <Link to={`/notes/edit/${this.state.id}'`}>
             <Button className="deep orange">EDIT</Button>&nbsp;
           </Link>
           <Button className="red accent-2" onClick={this.deleteNote} >DELETE</Button>
