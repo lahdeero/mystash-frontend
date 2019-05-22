@@ -2,8 +2,6 @@ import React from 'react'
 import Textarea from 'react-textarea-autosize'
 import { connect } from 'react-redux'
 import { Button, Chip, Row, Col } from 'react-materialize'
-import { Redirect } from 'react-router-dom'
-
 import { modifyNote } from '../../reducers/noteReducer'
 import noteService from '../../services/NoteService.js'
 import { notify, errormessage } from '../../reducers/notificationReducer'
@@ -13,7 +11,6 @@ class Edit extends React.Component {
     super(props)
     this.state = {
       isMounted: false,
-      redirect: false,
       tagText: '',
       id: '',
       title: '',
@@ -33,9 +30,7 @@ class Edit extends React.Component {
       })
     } catch (eception) {
       this.props.errormessage(`Couldn't find note '${this.props.match.params.id}'`, 5)
-      this.setState({
-        redirect: true
-      })
+      this.props.history.push('/')
     }
   }
   async componentDidMount() {
@@ -56,13 +51,7 @@ class Edit extends React.Component {
       }
       await this.props.modifyNote(noteObject)
       await this.props.notify(`you modified '${noteObject.title}'`, 10)
-      // Cant set id to empty 'cos of redirect
-      this.setState({
-        title: '',
-        content: '',
-        tags: []
-      })
-      await this.setState({ redirect: true })
+      this.props.history.push('/')
     } catch (exception) {
       console.log(exception)
       this.props.errormessage('ERROR WHILE EDITING NOTE', 10)
@@ -104,11 +93,6 @@ class Edit extends React.Component {
   }
 
   render() {
-    if (this.state.redirect) {
-      const redirecturl = '/' // 'notes/' + this.state.id
-      return <div><Redirect to={redirecturl} /></div>
-    }
-
     return (
       <div className="container">
         <div>

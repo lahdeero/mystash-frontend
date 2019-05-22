@@ -11,9 +11,7 @@ const Login = (props) => {
 
   const handleLogin = async (event) => {
     event.preventDefault()
-    console.log('should handle login..')
     try {
-      console.log('handles login...')
       await props.actionForLogin({
         username: username,
         password: password

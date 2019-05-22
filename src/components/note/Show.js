@@ -2,7 +2,6 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Button } from 'react-materialize'
 import { Link } from 'react-router-dom'
-
 import noteService from '../../services/NoteService.js'
 import { removeNote } from '../../reducers/noteReducer'
 import { notify, errormessage } from '../../reducers/notificationReducer'
@@ -11,7 +10,6 @@ class Show extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      redirect: false,
       id: '',
       title: '',
       content: '',
@@ -38,7 +36,6 @@ class Show extends React.Component {
     event.preventDefault()
     if (window.confirm(`Are you sure you want to delete '${this.state.title}' ?`)) {
       const delId = await this.props.removeNote(this.state.id)
-      console.log('DEL ID = ' + delId)
       if (typeof (delId) === 'number') {
         this.props.notify(`you deleted '${this.state.title}'`, 10)
         this.props.history.push('/')

@@ -1,9 +1,8 @@
 import React from 'react'
+import { withRouter } from 'react-router-dom'
 import Textarea from 'react-textarea-autosize'
 import { connect } from 'react-redux'
 import { Button } from 'react-materialize'
-import { Redirect } from 'react-router-dom'
-
 import { createNote } from '../../reducers/noteReducer'
 import { notify, errormessage } from '../../reducers/notificationReducer'
 
@@ -12,24 +11,14 @@ class Form extends React.Component {
     super(props)
     this.state = {
       isMounted: false,
-      redirect: false,
-      redirect_url: '',
       tagText: '',
       title: '',
       content: '',
       tags: []
     }
   }
-  componentDidMount() {
-    this.setState({ isMounted: true })
-  }
-  componentWillUnmount() {
-    this.setState({ isMounted: false })
-  }
 
   handleChange = (event) => {
-    if (!this.state.isMounted) return
-    // console.log(event.target.name, event.target.value)
     this.setState({ [event.target.name]: event.target.value })
   }
   handleContent = (event) => {
@@ -78,26 +67,23 @@ class Form extends React.Component {
         content: this.state.content,
         tags: this.state.tags
       }
-      const id = await this.props.createNote(noteObject)
+      // const id = await this.props.createNote(noteObject)
       await this.props.notify(`you created '${noteObject.title}'`, 10)
       this.setState({
         title: '',
         content: '',
         tag_id: ''
       })
-      await this.setState({ redirect_url: '/notes/' + id })
-      await this.setState({ redirect: true })
+      // await this.setState({ redirect_url: '/notes/' + id })
+      console.log('pitäis redirektaa..')
+      await this.props.history.push('/')
     } catch (exception) {
+      console.log(exception)
       this.props.errormessage('ERROR WHILE ADDING NOTE', 10)
     }
   }
 
   render() {
-    if (this.state.redirect) {
-      return <div><Redirect to={this.state.redirect_url} /></div>
-      // return <div><Redirect to='/' /></div>
-    }
-
     return (
       <div className="container">
         <h2>Create new note</h2>
@@ -145,9 +131,4 @@ const mapDispatchToProps = {
   errormessage
 }
 
-const ConnectedNoteForm = connect(
-  null,
-  mapDispatchToProps
-)(Form)
-
-export default ConnectedNoteForm
+export default withRouter(connect(null, mapDispatchToProps)(Form))

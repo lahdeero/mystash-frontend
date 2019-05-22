@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 import { connect } from 'react-redux'
-
 import './App.css'
 import Menu from './components/Menu'
 import Login from './components/Login'
@@ -12,27 +11,34 @@ import Form from './components/note/Form'
 import Settings from './components/Settings'
 import Notification from './components/Notification'
 import { noteInitialization, clearNotes } from './reducers/noteReducer'
+import { notify } from './reducers/notificationReducer'
 import { actionForLogin, setLogin, actionForLogout } from './reducers/userReducer'
 import useFilter from './hooks/useFilter'
 
 const App = (props) => {
   const filter = useFilter()
-  const [state, setState] = useState({ user: null, notes: [], navigation: 0, logged: 0 })
+  const [state, setState] = useState({ navigation: 0, logged: 0 })
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('MS_token')
+    console.log(state)
     if (state.logged === 0 && loggedUserJSON) {
+      setState({ navigation: 1, logged: 1 })
       init()
     }
-  })
+  }, [])
 
   const init = async () => {
-    await setState({
-      notes: [],
-      navigation: 1,
-      logged: 1
-    })
-    props.noteInitialization()
+    try {
+      setLoading(true)
+      await props.noteInitialization()
+    } catch (e) {
+      props.notify(e)
+    } finally {
+      setLoading(false)
+    }
+    console.log(state)
   }
 
   const handleLogout = (event) => {
@@ -41,17 +47,18 @@ const App = (props) => {
     filter.setFilter('')
     props.clearNotes()
     props.actionForLogout()
-    setState({ user: null, navigation: 0, logged: 0 })
+    setState({ navigation: 0, logged: 0 })
   }
 
   if (state.logged === 1) {
+    console.log(loading)
     return (
       <div>
         <Notification />
         <Router basename={process.env.PUBLIC_URL}>
           <div>
             <Menu currentPage={state.navigation} filter={filter} handleLogout={handleLogout} />
-            <Route exact path='/' render={() => <List notes={props.notes} filter={filter} />} />
+            <Route exact path='/' render={() => <List notes={props.notes} filter={filter} loading={loading} />} />
             <Route path='/login' render={() => <Login />} />
             <Route path='/create' render={() => <Form />} />
             <Route path='/settings' render={() => <Settings />} />
@@ -59,7 +66,7 @@ const App = (props) => {
             <Route exact path='/notes/edit/:id' component={Edit} />
           </div>
         </Router>
-      </div>
+      </div >
     )
   } else {
     return <div><Login actionForLogin={props.actionForLogin} init={init} noteInitialization={props.noteInitialization} /></div>
@@ -77,7 +84,8 @@ const mapDispatchToProps = {
   setLogin,
   actionForLogin,
   actionForLogout,
-  clearNotes
+  clearNotes,
+  notify
 }
 export default connect(
   mapStateToProps,
