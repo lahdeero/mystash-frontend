@@ -27,7 +27,7 @@ const App = (props) => {
       setState({ navigation: 1, logged: 1 })
       init()
     }
-  }, [])
+  })
 
   const init = async () => {
     try {
@@ -50,6 +50,7 @@ const App = (props) => {
     setState({ navigation: 0, logged: 0 })
   }
 
+  console.log(state)
   if (state.logged === 1) {
     console.log(loading)
     return (

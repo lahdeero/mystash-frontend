@@ -1,5 +1,4 @@
 import loginService from '../services/LoginService'
-import noteService from '../services/NoteService'
 
 const userReducer = (store = null, action) => {
   switch (action.type) {
@@ -22,12 +21,11 @@ export const actionForRegister = (information) => {
   }
 }
 
-export const setLogin = (token) => {
-  noteService.setToken(token)
+export const setLogin = () => {
   return async (dispatch) => {
     dispatch({
-      type: 'NOTHING',
-      data: token
+      type: 'LOGIN',
+      data: 'logged'
     })
   }
 }
