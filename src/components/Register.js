@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { connect } from 'react-redux'
 import { Row, Navbar, Input, Icon, Button } from 'react-materialize'
 import { actionForRegister, setLogin } from '../reducers/userReducer'
+import { ClipLoader } from 'react-spinners'
 
 const Register = (props) => {
   const [firstname, setFirstname] = useState('')
@@ -10,21 +11,22 @@ const Register = (props) => {
   const [password, setPassword] = useState('')
   const [email, setEmail] = useState('')
   const [error, setError] = useState('')
-  const [redirect, setRedirect] = useState(false)
+  const [loading, setLoading] = useState(false)
 
   const handleRegister = async (event) => {
     event.preventDefault()
+    setLoading(true)
     try {
-      const token = await props.init({
+      await props.actionForRegister({
         realname: firstname + ' ' + lastname,
         username: username,
         password: password,
         email: email
       })
-      console.log('token after register: ', token)
-      setRedirect(true)
-      props.actionForLogin() // must be last line, activates App.js to "reload"
+      props.init()
     } catch (exception) {
+      setLoading(false)
+      console.log(exception)
       setError('Username not available')
       setTimeout(() => {
         setError('')
@@ -37,8 +39,9 @@ const Register = (props) => {
       <Navbar className="indigo" brand='my-stash' right>
       </Navbar>
       <div className="container">
+        <ClipLoader loading={loading} color='blue' />
         <div>
-          {!redirect && error ? <div className="error">{error}</div> : <div className="notification">Fields with (*) are required</div>}
+          {error && <div className="error">{error}</div>}
           <form onSubmit={handleRegister}>
             <Row>
               <Input onChange={(event) => setFirstname(event.target.value)} name="firstname" label="First Name" ><Icon>accessibility</Icon></Input>

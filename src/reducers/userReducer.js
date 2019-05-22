@@ -3,42 +3,48 @@ import loginService from '../services/LoginService'
 const userReducer = (store = null, action) => {
   switch (action.type) {
     case 'REGISTER':
-      return (store = action.data)
+      return action.data
     case 'LOGIN':
-      return (store = action.data)
+      return action.data
     case 'LOGOUT':
-      return (store = null)
+      return null
     default:
       return store
   }
 }
 
 export const actionForRegister = (information) => {
-  return async () => {
+  return async dispatch => {
     const response = await loginService.register(information)
-    window.localStorage.setItem('MS_token', response)
+    console.log(response)
+    window.localStorage.setItem('MS_token', response.token)
+    dispatch({
+      type: 'REGISTER',
+      data: response.user
+    })
     return response
   }
 }
 
 export const setLogin = () => {
   return async (dispatch) => {
+    const response = await loginService.getUser()
     dispatch({
       type: 'LOGIN',
-      data: 'logged'
+      data: response
     })
   }
 }
 
 export const actionForLogin = (creditentals) => {
-  console.log('action for login..')
+  // console.log('action for login..')
   return async (dispatch) => {
     const response = await loginService.login(creditentals)
     console.log('response: ', response)
-    window.localStorage.setItem('MS_token', response)
+    window.localStorage.setItem('MS_token', response.token)
     dispatch({
       type: 'LOGIN',
-      data: 'logged'
+      data: response.user
     })
   }
 }
