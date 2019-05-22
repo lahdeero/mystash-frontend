@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Pagination } from 'react-materialize'
-
+import { ClipLoader } from 'react-spinners'
 import ListNote from './ListNote'
 
 const List = (props) => {
@@ -39,6 +39,7 @@ const List = (props) => {
   return (
     <div className="container">
       <div className="center">
+        <ClipLoader loading={props.loading} color='blue' />
         <Pagination items={Math.ceil(props.notes.length / notesPerPage)} activePage={page} maxButtons={10} onSelect={handleSelect} />
       </div>
       <ul>

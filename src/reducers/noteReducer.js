@@ -3,8 +3,7 @@ import noteService from '../services/NoteService.js'
 const noteReducer = (store = [], action) => {
   switch (action.type) {
     case 'CREATE':
-      return [action.data,
-        ...store.slice(0, store.length)]
+      return [action.data, ...store.slice(0, store.length)]
     case 'MODIFY':
       return store.map(note => (note.id === action.data[0].id) ? action.data[0] : note)
     case 'REMOVE':
