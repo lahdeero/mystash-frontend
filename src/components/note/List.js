@@ -36,7 +36,6 @@ const List = (props) => {
       <div className="center">
         <ClipLoader loading={props.loading} color='blue' />
         <Pagination items={Math.ceil(props.notes.length / notesPerPage)} activePage={page} maxButtons={10} onSelect={handleSelect} />
-        <SortDropdown />
       </div>
       <ul>
         {notesToShow.map(note => <li key={note.id}>
