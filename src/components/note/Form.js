@@ -67,7 +67,6 @@ class Form extends React.Component {
         content: this.state.content,
         tags: this.state.tags
       }
-      // const id = await this.props.createNote(noteObject)
       const createdNote = await this.props.createNote(noteObject)
       this.props.notify(`you created '${createdNote.title}'`, 10)
       this.setState({
@@ -76,7 +75,6 @@ class Form extends React.Component {
         tag_id: ''
       })
       // await this.setState({ redirect_url: '/notes/' + id })
-      console.log('pitäis redirektaa..')
       this.props.history.push('/')
     } catch (exception) {
       console.log(exception)

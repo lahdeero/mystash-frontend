@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Pagination } from 'react-materialize'
 import { ClipLoader } from 'react-spinners'
 import ListNote from './ListNote'
+import SortDropdown from './SortDropdown'
 
 const List = (props) => {
   const [page, setPage] = useState(1)
@@ -13,39 +14,34 @@ const List = (props) => {
     }
   }
 
-  const removeDuplicatesUsingSet = (array) => {
-    let UniqueArray = Array.from(new Set(array))
-    return UniqueArray
+  const filterNotes = (allNotes, filter) => {
+    if (filter && (filter !== undefined || null || '')) {
+      try {
+        const filterByTitle = allNotes.filter(note => note.title.toLowerCase().includes(filter.toLowerCase()))
+        const filterByTag = allNotes.filter(note => note.tags.join(' ').toLowerCase().includes(filter.toLowerCase()))
+        // return removeDuplicates(filterByTitle.concat(filterByTag))
+        return Array.from(new Set(filterByTitle.concat(filterByTag)))
+      } catch (e) {
+        console.log(e)
+      }
+    }
+    return allNotes
   }
 
-  let key = 1
-  const filter = props.filter.value
-  const allNotes = props.notes
-  let notesToShow = allNotes
-  if (filter && (filter !== undefined || null || '')) {
-    try {
-      const filterByTitle = allNotes.filter(note => note.title.toLowerCase().includes(filter.toLowerCase()))
-      const filterByTag = allNotes.filter(note => note.tags.join(' ').toLowerCase().includes(filter.toLowerCase()))
-      notesToShow = removeDuplicatesUsingSet(filterByTitle.concat(filterByTag))
-    } catch (e) {
-      // NOT SURE IF THIS IS EVEN NEEDED ANYMORE; BUG FIXED
-      console.log(e)
-    }
-  }
-  const start = (page - 1) * notesPerPage
-  const end = start + notesPerPage
-  notesToShow = notesToShow.slice(start, end)
+  const filteredNotes = filterNotes(props.notes, props.filter.value)
+  const notesToShow = filteredNotes.slice((page - 1) * notesPerPage, (page - 1) * notesPerPage + notesPerPage)
 
   return (
     <div className="container">
       <div className="center">
         <ClipLoader loading={props.loading} color='blue' />
         <Pagination items={Math.ceil(props.notes.length / notesPerPage)} activePage={page} maxButtons={10} onSelect={handleSelect} />
+        <SortDropdown />
       </div>
       <ul>
-        {notesToShow.map(note => <li key={key++}>
+        {notesToShow.map(note => <li key={note.id}>
           <div>
-            <ListNote note={note} Key={key} filter={props.filter} />
+            <ListNote note={note} Key={note.id} filter={props.filter} />
           </div>
         </li>
         )}
