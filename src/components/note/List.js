@@ -7,7 +7,7 @@ import SortDropdown from './SortDropdown'
 const List = (props) => {
   const [page, setPage] = useState(1)
   const [notesPerPage] = useState(10)
-  const [sort, setSort] = useState('ALPHABETIC')
+  const [sort, setSort] = useState('MODIFIED')
 
   const handleSelect = async (selectedKey) => {
     if (selectedKey !== undefined || selectedKey !== null) {
