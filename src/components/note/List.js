@@ -49,9 +49,7 @@ const List = (props) => {
       case 'ALPHABETIC':
         return compareStrings(a.title.toLowerCase(), b.title.toLowerCase())
       case 'MODIFIED':
-        const res = compareDates(a.modified_date, b.modified_date)
-        console.log(res)
-        return res
+        return compareDates(a.modified_date, b.modified_date)
       default:
         return b.id - a.id
     }
