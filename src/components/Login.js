@@ -53,6 +53,7 @@ const Login = (props) => {
             <Input
               type="text"
               name="username"
+              autoComplete="off"
               value={username}
               onChange={(event) => setUsername(event.target.value)}
             ><Icon>account_circle</Icon></Input>
@@ -62,6 +63,7 @@ const Login = (props) => {
             <Input
               type="password"
               name="password"
+              autoComplete="off"
               value={password}
               onChange={(event) => setPassword(event.target.value)}
             ><Icon>https</Icon></Input>

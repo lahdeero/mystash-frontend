@@ -7,6 +7,7 @@ import SortDropdown from './SortDropdown'
 const List = (props) => {
   const [page, setPage] = useState(1)
   const [notesPerPage] = useState(10)
+  const [sort, setSort] = useState('ALPHABETIC')
 
   const handleSelect = async (selectedKey) => {
     if (selectedKey !== undefined || selectedKey !== null) {
@@ -28,14 +29,46 @@ const List = (props) => {
     return allNotes
   }
 
-  const filteredNotes = filterNotes(props.notes, props.filter.value)
+  const compareStrings = (a, b) => {
+    if (a < b) { return -1 }
+    if (a > b) { return 1 }
+    return 0
+  }
+
+  const compareDates = (date1, date2) => {
+    if (!date1 && !date2) {
+      return 0
+    } else if (!date2 || date1 > date2) {
+      return -1
+    } else if (!date1 || date1 < date2) { return 1 }
+    return 0
+  }
+
+  const sortFunction = (a, b) => {
+    switch (sort) {
+      case 'ALPHABETIC':
+        return compareStrings(a.title.toLowerCase(), b.title.toLowerCase())
+      case 'MODIFIED':
+        const res = compareDates(a.modified_date, b.modified_date)
+        console.log(res)
+        return res
+      default:
+        return b.id - a.id
+    }
+  }
+
+  const sortedNotes = props.notes.sort(sortFunction)
+  const filteredNotes = filterNotes(sortedNotes, props.filter.value)
   const notesToShow = filteredNotes.slice((page - 1) * notesPerPage, (page - 1) * notesPerPage + notesPerPage)
 
   return (
     <div className="container">
       <div className="center">
         <ClipLoader loading={props.loading} color='blue' />
-        <Pagination items={Math.ceil(props.notes.length / notesPerPage)} activePage={page} maxButtons={10} onSelect={handleSelect} />
+        <div className="row">
+          <div className="col s10"><Pagination items={Math.ceil(filteredNotes.length / notesPerPage)} activePage={page} maxButtons={10} onSelect={handleSelect} /></div>
+          <div className="col s2"><SortDropdown sort={sort} setSort={setSort} /></div>
+        </div>
       </div>
       <ul>
         {notesToShow.map(note => <li key={note.id}>
