@@ -3,7 +3,7 @@ import { Button } from 'react-materialize'
 
 const SortDropdown = (props) => {
   const [show, setShow] = useState(false)
-  const { sort, setSort } = props
+  const { setSort } = props
 
   const toggleShow = (event) => {
     event.preventDefault()
@@ -15,16 +15,17 @@ const SortDropdown = (props) => {
     setShow(false)
   }
 
+  const buttonClass = 'light-blue accent-1'
   return (
     <div>
-      <Button onClick={toggleShow}>
+      <Button className={buttonClass} onClick={toggleShow}>
         Sort
       </Button>
       {show ? (
         <div className="menu">
-          <Button onClick={() => updateSort('ALPHABETIC')}>Alphabetic</Button>
-          <Button onClick={() => updateSort('CREATED')}>Created</Button>
-          <Button onClick={() => updateSort('MODIFIED')}>Modified</Button>
+          <Button className={buttonClass} onClick={() => updateSort('ALPHABETIC')}>Alphabetic</Button>
+          <Button className={buttonClass} onClick={() => updateSort('CREATED')}>Created</Button>
+          <Button className={buttonClass} onClick={() => updateSort('MODIFIED')}>Modified</Button>
         </div>)
         : (<div></div>)}
     </div>
