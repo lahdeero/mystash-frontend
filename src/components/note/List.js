@@ -69,7 +69,7 @@ const List = (props) => {
     <div className="container">
       <div className="center">
         <ClipLoader loading={props.loading} color='blue' />
-        <Paging itemsLenght={Math.ceil(filterNotes.length / notesPerPage)} page={page} handleSelect={handleSelect} sort={sort} setSort={setSort} />
+        <Paging itemsLenght={Math.ceil(filteredNotes.length / notesPerPage)} page={page} handleSelect={handleSelect} sort={sort} setSort={setSort} />
       </div>
       <ul>
         {notesToShow.map(note => <li key={note.id}>
@@ -80,7 +80,7 @@ const List = (props) => {
         )}
       </ul>
       <div className="center">
-        <Paging itemsLenght={Math.ceil(filterNotes.length / notesPerPage)} page={page} handleSelect={handleSelect} sort={sort} setSort={setSort} />
+        <Paging itemsLenght={Math.ceil(filteredNotes.length / notesPerPage)} page={page} handleSelect={handleSelect} sort={sort} setSort={setSort} />
       </div>
     </div>
   )
