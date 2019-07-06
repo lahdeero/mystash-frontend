@@ -48,9 +48,9 @@ const List = (props) => {
     console.log(sort)
     switch (sort) {
       case 'ALPHABETIC':
-        return compareStrings(a.title.toLowerCase(), b.title.toLowerCase(), true)
+        return compareStrings(a.title.toLowerCase().trim(), b.title.toLowerCase().trim(), true)
       case '!ALPHABETIC':
-        return compareStrings(a.title.toLowerCase(), b.title.toLowerCase(), false)
+        return compareStrings(a.title.toLowerCase().trim(), b.title.toLowerCase().trim(), false)
       case 'MODIFIED':
         return compareDates(a.modified_date, b.modified_date)
       case '!MODIFIED':
@@ -62,8 +62,7 @@ const List = (props) => {
     }
   }
 
-  const sortedNotes = props.notes.sort(sortFunction)
-  const filteredNotes = filterNotes(sortedNotes, props.filter.value)
+  const filteredNotes = filterNotes(props.notes.sort(sortFunction), props.filter.value)
   const notesToShow = filteredNotes.slice((page - 1) * notesPerPage, (page - 1) * notesPerPage + notesPerPage)
 
   return (
