@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Row, Col, CardPanel } from 'react-materialize'
 import loginService from '../services/LoginService'
+import versionResolver from '../utils/versionResolver'
 
 const Settings = () => {
   const [username, setUsername] = useState('Loading...')
@@ -21,7 +22,7 @@ const Settings = () => {
     <div>
       <div className='container'>
         <Row>
-          {'version 0.23'}
+          {`version ${versionResolver}`}
         </Row>
         <Row>
           <Col s={12} m={5}>

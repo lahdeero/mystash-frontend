@@ -16,10 +16,11 @@ const userReducer = (store = null, action) => {
 export const actionForRegister = (information) => {
   return async dispatch => {
     const response = await loginService.register(information)
+    const user = await loginService.getUser()
     window.localStorage.setItem('MS_token', response.token)
     dispatch({
       type: 'REGISTER',
-      data: response.user
+      data: user
     })
     return response
   }
@@ -27,10 +28,10 @@ export const actionForRegister = (information) => {
 
 export const setLogin = () => {
   return async (dispatch) => {
-    const response = await loginService.getUser()
+    const user = await loginService.getUser()
     dispatch({
       type: 'LOGIN',
-      data: response
+      data: user
     })
   }
 }
@@ -39,9 +40,10 @@ export const actionForLogin = (creditentals) => {
   return async (dispatch) => {
     const response = await loginService.login(creditentals)
     window.localStorage.setItem('MS_token', response.token)
+    const user = await loginService.getUser()
     dispatch({
       type: 'LOGIN',
-      data: response.user
+      data: user
     })
   }
 }

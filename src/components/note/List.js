@@ -45,7 +45,6 @@ const List = (props) => {
   }
 
   const sortFunction = (a, b) => {
-    console.log(sort)
     switch (sort) {
       case 'ALPHABETIC':
         return compareStrings(a.title.toLowerCase().trim(), b.title.toLowerCase().trim(), true)

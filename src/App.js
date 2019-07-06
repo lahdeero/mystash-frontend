@@ -48,13 +48,15 @@ const App = (props) => {
     setState({ navigation: 0, logged: 0 })
   }
 
+  console.log('state: ', state)
+
   if (state.logged === 1) {
     return (
       <div>
         <Notification />
         <Router basename={process.env.PUBLIC_URL}>
           <div>
-            <Menu currentPage={state.navigation} filter={filter} handleLogout={handleLogout} />
+            <Menu state={state} setState={setState} filter={filter} handleLogout={handleLogout} />
             <Route exact path='/' render={() => <List notes={props.notes} filter={filter} loading={loading} />} />
             <Route path='/login' render={() => <Login />} />
             <Route path='/create' render={() => <Form />} />
