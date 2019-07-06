@@ -19,12 +19,12 @@ class Show extends React.Component {
 
   async componentDidMount() {
     try {
-      const oneNoteArr = await noteService.getOne(this.props.match.params.id)
+      const note = await noteService.getOne(this.props.match.params.id)
       await this.setState({
-        id: oneNoteArr[0].id,
-        title: oneNoteArr[0].title,
-        content: oneNoteArr[0].content,
-        tags: oneNoteArr[0].tags
+        id: note.id,
+        title: note.title,
+        content: note.content,
+        tags: note.tags
       })
     } catch (eception) {
       this.props.errormessage(`Couldn't find note '${this.props.match.params.id}'`, 5)

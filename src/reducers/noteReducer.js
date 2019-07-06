@@ -5,7 +5,7 @@ const noteReducer = (store = [], action) => {
     case 'CREATE':
       return [action.data, ...store.slice(0, store.length)]
     case 'MODIFY':
-      return store.map(note => (note.id === action.data[0].id) ? action.data[0] : note)
+      return store.map(note => (note.id === action.data.id) ? action.data : note)
     case 'REMOVE':
       return store.filter(note => note.id !== action.data)
     case 'INIT_NOTES':
@@ -37,7 +37,7 @@ export const clearNotes = () => {
 }
 
 /**
- * WHY IN HELL I HAVE THIS?!
+ * WHY I HAVE THIS?!
  * @param {} noteObject
  */
 export const createButDontSave = (noteObject) => {
