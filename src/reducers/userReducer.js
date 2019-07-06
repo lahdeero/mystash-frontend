@@ -16,7 +16,6 @@ const userReducer = (store = null, action) => {
 export const actionForRegister = (information) => {
   return async dispatch => {
     const response = await loginService.register(information)
-    console.log(response)
     window.localStorage.setItem('MS_token', response.token)
     dispatch({
       type: 'REGISTER',
@@ -40,7 +39,6 @@ export const actionForLogin = (creditentals) => {
   // console.log('action for login..')
   return async (dispatch) => {
     const response = await loginService.login(creditentals)
-    console.log('response: ', response)
     window.localStorage.setItem('MS_token', response.token)
     dispatch({
       type: 'LOGIN',

@@ -29,9 +29,9 @@ const List = (props) => {
     return allNotes
   }
 
-  const compareStrings = (a, b) => {
-    if (a < b) { return -1 }
-    if (a > b) { return 1 }
+  const compareStrings = (c, d, ascending) => {
+    if (c < d) { return ascending ? -1 : 1 }
+    if (c > d) { return ascending ? 1 : -1 }
     return 0
   }
 
@@ -45,11 +45,12 @@ const List = (props) => {
   }
 
   const sortFunction = (a, b) => {
+    console.log(sort)
     switch (sort) {
       case 'ALPHABETIC':
-        return compareStrings(a.title.toLowerCase(), b.title.toLowerCase())
+        return compareStrings(a.title.toLowerCase(), b.title.toLowerCase(), true)
       case '!ALPHABETIC':
-        return compareStrings(b.title.toLowerCase(), a.title.toLowerCase())
+        return compareStrings(a.title.toLowerCase(), b.title.toLowerCase(), false)
       case 'MODIFIED':
         return compareDates(a.modified_date, b.modified_date)
       case '!MODIFIED':
