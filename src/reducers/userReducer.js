@@ -36,7 +36,6 @@ export const setLogin = () => {
 }
 
 export const actionForLogin = (creditentals) => {
-  // console.log('action for login..')
   return async (dispatch) => {
     const response = await loginService.login(creditentals)
     window.localStorage.setItem('MS_token', response.token)
