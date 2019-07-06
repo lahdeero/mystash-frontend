@@ -5,7 +5,7 @@ const noteReducer = (store = [], action) => {
     case 'CREATE':
       return [action.data, ...store.slice(0, store.length)]
     case 'MODIFY':
-      return store.map(note => (note.id === action.data[0].id) ? action.data[0] : note)
+      return store.map(note => (note.id === action.data.id) ? action.data : note)
     case 'REMOVE':
       return store.filter(note => note.id !== action.data)
     case 'INIT_NOTES':
@@ -36,6 +36,10 @@ export const clearNotes = () => {
   }
 }
 
+/**
+ * WHY I HAVE THIS?!
+ * @param {} noteObject
+ */
 export const createButDontSave = (noteObject) => {
   return async (dispatch) => {
     dispatch({
@@ -48,11 +52,12 @@ export const createButDontSave = (noteObject) => {
 export const createNote = (noteObject) => {
   return async (dispatch) => {
     const savedNoteObject = await noteService.create(noteObject)
+    console.log(savedNoteObject)
     dispatch({
       type: 'CREATE',
-      data: savedNoteObject[0]
+      data: savedNoteObject
     })
-    return savedNoteObject[0].id
+    return savedNoteObject
   }
 }
 

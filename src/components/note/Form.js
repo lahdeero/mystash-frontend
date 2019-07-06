@@ -67,16 +67,15 @@ class Form extends React.Component {
         content: this.state.content,
         tags: this.state.tags
       }
-      // const id = await this.props.createNote(noteObject)
-      await this.props.notify(`you created '${noteObject.title}'`, 10)
+      const createdNote = await this.props.createNote(noteObject)
+      this.props.notify(`you created '${createdNote.title}'`, 10)
       this.setState({
         title: '',
         content: '',
         tag_id: ''
       })
       // await this.setState({ redirect_url: '/notes/' + id })
-      console.log('pitäis redirektaa..')
-      await this.props.history.push('/')
+      this.props.history.push('/')
     } catch (exception) {
       console.log(exception)
       this.props.errormessage('ERROR WHILE ADDING NOTE', 10)

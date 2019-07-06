@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Navbar, Input, Icon, Button } from 'react-materialize'
 import Register from './Register'
+import { ClipLoader } from 'react-spinners'
 import '../App.css'
 
 const Login = (props) => {
@@ -8,15 +9,18 @@ const Login = (props) => {
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const [register, setRegister] = useState(false)
+  const [loading, setLoading] = useState(false)
 
   const handleLogin = async (event) => {
     event.preventDefault()
     try {
+      setLoading(true)
       await props.actionForLogin({
         username: username,
         password: password
       })
     } catch (exception) {
+      setLoading(false)
       setError('Bad credentials')
       console.log(exception)
       setTimeout(() => {
@@ -41,6 +45,7 @@ const Login = (props) => {
       <Navbar className="indigo" brand='mystash' href={process.env.PUBLIC_URL} right>
       </Navbar>
       <div className="container centered">
+        <ClipLoader loading={loading} color='blue' />
         {error !== '' ? <div className="error">{error}</div> : <div></div>}
         <form onSubmit={handleLogin}>
           <div>
@@ -48,6 +53,7 @@ const Login = (props) => {
             <Input
               type="text"
               name="username"
+              autoComplete="off"
               value={username}
               onChange={(event) => setUsername(event.target.value)}
             ><Icon>account_circle</Icon></Input>
@@ -57,6 +63,7 @@ const Login = (props) => {
             <Input
               type="password"
               name="password"
+              autoComplete="off"
               value={password}
               onChange={(event) => setPassword(event.target.value)}
             ><Icon>https</Icon></Input>

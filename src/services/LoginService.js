@@ -1,11 +1,18 @@
 import API from 'axios'
 import { resolveUrl } from '../utils/environmentResolvers'
+import getRequestConfig from '../utils/requestConfigResolver'
 
 const backendUrl = resolveUrl()
 const baseUrl = backendUrl + '/api/'
 
+const getUser = async () => {
+  const response = await API.get(baseUrl + 'user', getRequestConfig())
+  return response.data
+}
+
 const register = async (information) => {
-  const response = await API.post(baseUrl + 'register', information)
+  const response = await API.post(baseUrl + 'user', information)
+  console.log(response.data)
   return response.data
 }
 const login = async (credentials) => {
@@ -13,4 +20,4 @@ const login = async (credentials) => {
   return response.data
 }
 
-export default { register, login }
+export default { getUser, register, login }

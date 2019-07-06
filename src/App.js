@@ -22,12 +22,11 @@ const App = (props) => {
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('MS_token')
-    console.log(state)
     if (state.logged === 0 && loggedUserJSON) {
       setState({ navigation: 1, logged: 1 })
       init()
     }
-  })
+  }, [props.user])
 
   const init = async () => {
     try {
@@ -38,7 +37,6 @@ const App = (props) => {
     } finally {
       setLoading(false)
     }
-    console.log(state)
   }
 
   const handleLogout = (event) => {
@@ -50,9 +48,7 @@ const App = (props) => {
     setState({ navigation: 0, logged: 0 })
   }
 
-  console.log(state)
   if (state.logged === 1) {
-    console.log(loading)
     return (
       <div>
         <Notification />
@@ -70,7 +66,11 @@ const App = (props) => {
       </div >
     )
   } else {
-    return <div><Login actionForLogin={props.actionForLogin} init={init} noteInitialization={props.noteInitialization} /></div>
+    return (
+      <div>
+        <Login actionForLogin={props.actionForLogin} init={init} />
+      </div>
+    )
   }
 }
 

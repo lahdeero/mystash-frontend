@@ -11,7 +11,7 @@ class Notification extends React.Component {
   }
   render() {
     const notification = this.props.notification[0]
-    if (notification === undefined || notification.length <= 1) {
+    if (notification === undefined || notification.length <= 1 || typeof (notification) === 'object') {
       return (<div></div>)
     }
     return (
