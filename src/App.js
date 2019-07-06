@@ -17,13 +17,13 @@ import useFilter from './hooks/useFilter'
 
 const App = (props) => {
   const filter = useFilter()
-  const [state, setState] = useState({ navigation: 0, logged: 0 })
+  const [logged, setLogged] = useState(false)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('MS_token')
-    if (state.logged === 0 && loggedUserJSON) {
-      setState({ navigation: 1, logged: 1 })
+    if (!logged || loggedUserJSON) {
+      setLogged(true)
       init()
     }
   }, [props.user])
@@ -45,18 +45,16 @@ const App = (props) => {
     filter.setFilter('')
     props.clearNotes()
     props.actionForLogout()
-    setState({ navigation: 0, logged: 0 })
+    setLogged(false)
   }
 
-  console.log('state: ', state)
-
-  if (state.logged === 1) {
+  if (logged) {
     return (
       <div>
         <Notification />
         <Router basename={process.env.PUBLIC_URL}>
           <div>
-            <Menu state={state} setState={setState} filter={filter} handleLogout={handleLogout} />
+            <Menu filter={filter} handleLogout={handleLogout} />
             <Route exact path='/' render={() => <List notes={props.notes} filter={filter} loading={loading} />} />
             <Route path='/login' render={() => <Login />} />
             <Route path='/create' render={() => <Form />} />
