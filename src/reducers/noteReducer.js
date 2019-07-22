@@ -36,28 +36,15 @@ export const clearNotes = () => {
   }
 }
 
-/**
- * WHY I HAVE THIS?!
- * @param {} noteObject
- */
-export const createButDontSave = (noteObject) => {
-  return async (dispatch) => {
-    dispatch({
-      type: 'CREATE',
-      data: noteObject
-    })
-  }
-}
-
 export const createNote = (noteObject) => {
   return async (dispatch) => {
     const savedNoteObject = await noteService.create(noteObject)
-    console.log(savedNoteObject)
+    const returnedNoteObject = await noteService.getOne(savedNoteObject.id)
     dispatch({
       type: 'CREATE',
-      data: savedNoteObject
+      data: returnedNoteObject
     })
-    return savedNoteObject
+    return returnedNoteObject
   }
 }
 
