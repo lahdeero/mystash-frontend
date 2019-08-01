@@ -22,7 +22,7 @@ const App = (props) => {
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('MS_token')
-    if (!logged || loggedUserJSON) {
+    if (!logged && loggedUserJSON) {
       setLogged(true)
       init()
     }
