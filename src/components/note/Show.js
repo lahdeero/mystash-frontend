@@ -47,10 +47,7 @@ class Show extends React.Component {
   render() {
     const tags = this.state.tags.join()
     const text = this.state.content
-    console.log(tags)
     const markdown = tags.includes('markdown')
-
-    console.log('markdown boolean', markdown)
 
     return (
       <div className="container">
