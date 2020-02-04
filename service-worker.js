@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/mystash-frontend/precache-manifest.33ccb825ba40d48903e8f49e2acc2304.js"
+  "/mystash-frontend/precache-manifest.f69356f69bb7f4065077c97747e7e4a8.js"
 );
 
 workbox.clientsClaim();
