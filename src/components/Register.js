@@ -36,7 +36,7 @@ const Register = (props) => {
 
   return (
     <div>
-      <Navbar className="indigo" brand='my-stash' right>
+      <Navbar className="indigo" brand='mystash' href={process.env.PUBLIC_URL} right>
       </Navbar>
       <div className="container">
         <ClipLoader loading={loading} color='blue' />
@@ -55,7 +55,7 @@ const Register = (props) => {
         </div>
         <br />
         <br />
-        Back to <a onClick={props.handleRegisterRedirect} href="/register">login</a>
+        Back to <a onClick={props.handleRegisterRedirect} href={process.env.PUBLIC_URL}>login</a>
       </div>
     </div>
   )

@@ -22,7 +22,7 @@ class Edit extends React.Component {
   async componentWillMount() {
     const note = await noteService.getOne(this.props.match.params.id)
     try {
-      await this.setState({
+      this.setState({
         id: note.id,
         title: note.title,
         content: note.content,

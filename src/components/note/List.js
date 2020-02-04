@@ -29,9 +29,9 @@ const List = (props) => {
     return allNotes
   }
 
-  const compareStrings = (a, b) => {
-    if (a < b) { return -1 }
-    if (a > b) { return 1 }
+  const compareStrings = (c, d, ascending) => {
+    if (c < d) { return ascending ? -1 : 1 }
+    if (c > d) { return ascending ? 1 : -1 }
     return 0
   }
 
@@ -47,26 +47,28 @@ const List = (props) => {
   const sortFunction = (a, b) => {
     switch (sort) {
       case 'ALPHABETIC':
-        return compareStrings(a.title.toLowerCase(), b.title.toLowerCase())
+        return compareStrings(a.title.toLowerCase().trim(), b.title.toLowerCase().trim(), true)
+      case '!ALPHABETIC':
+        return compareStrings(a.title.toLowerCase().trim(), b.title.toLowerCase().trim(), false)
       case 'MODIFIED':
         return compareDates(a.modified_date, b.modified_date)
+      case '!MODIFIED':
+        return compareDates(b.modified_date, a.modified_date)
+      case '!CREATED':
+        return a.id - b.id
       default:
         return b.id - a.id
     }
   }
 
-  const sortedNotes = props.notes.sort(sortFunction)
-  const filteredNotes = filterNotes(sortedNotes, props.filter.value)
+  const filteredNotes = filterNotes(props.notes.sort(sortFunction), props.filter.value)
   const notesToShow = filteredNotes.slice((page - 1) * notesPerPage, (page - 1) * notesPerPage + notesPerPage)
 
   return (
     <div className="container">
       <div className="center">
         <ClipLoader loading={props.loading} color='blue' />
-        <div className="row">
-          <div className="col s10"><Pagination items={Math.ceil(filteredNotes.length / notesPerPage)} activePage={page} maxButtons={10} onSelect={handleSelect} /></div>
-          <div className="col s2"><SortDropdown sort={sort} setSort={setSort} /></div>
-        </div>
+        <Paging itemsLenght={Math.ceil(filteredNotes.length / notesPerPage)} page={page} handleSelect={handleSelect} sort={sort} setSort={setSort} />
       </div>
       <ul>
         {notesToShow.map(note => <li key={note.id}>
@@ -77,8 +79,17 @@ const List = (props) => {
         )}
       </ul>
       <div className="center">
-        <Pagination items={Math.ceil(props.notes.length / notesPerPage)} activePage={page} maxButtons={10} onSelect={handleSelect} />
+        <Paging itemsLenght={Math.ceil(filteredNotes.length / notesPerPage)} page={page} handleSelect={handleSelect} sort={sort} setSort={setSort} />
       </div>
+    </div>
+  )
+}
+
+const Paging = ({ itemsLenght, page, handleSelect, sort, setSort }) => {
+  return (
+    <div className="row">
+      <div className="col s2"><SortDropdown sort={sort} setSort={setSort} /></div>
+      <div className="col s6"><Pagination items={itemsLenght} activePage={page} maxButtons={10} onSelect={handleSelect} /></div>
     </div>
   )
 }

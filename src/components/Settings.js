@@ -1,34 +1,28 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
+import React, { useEffect, useState } from 'react'
 import { Row, Col, CardPanel } from 'react-materialize'
+import loginService from '../services/LoginService'
+import versionResolver from '../utils/versionResolver'
 
-class Settings extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      username: '',
-      realname: '',
-      tier: '',
-      email: ''
-    }
-  }
+const Settings = () => {
+  const [username, setUsername] = useState('Loading...')
+  const [realname, setRealname] = useState('')
+  const [tier, setTier] = useState('')
+  const [email, setEmail] = useState('')
 
-  componentWillMount() {
-    if (this.props.user) {
-      this.setState({
-        username: this.props.user.username !== null ? this.props.user.username : '',
-        realname: this.props.user.realname !== null ? this.props.user.realname : '',
-        tier: this.props.user.tier === 1 ? 'User' : 'Unknown',
-        email: this.props.user.email !== null ? this.props.user.email : ''
-      })
-    }
-  }
+  useEffect(() => {
+    loginService.getUser().then(user => {
+      setUsername(user.username)
+      setRealname(user.realname)
+      setTier(user.tier)
+      setEmail(user.email)
+    })
+  })
 
-  render() {
-    return (
+  return (
+    <div>
       <div className='container'>
         <Row>
-          {'version 0.11'}
+          {`version ${versionResolver}`}
         </Row>
         <Row>
           <Col s={12} m={5}>
@@ -40,36 +34,26 @@ class Settings extends Component {
             <CardPanel className='blue lighten-3 black-text'>
               <Row>
                 <Col>Username: </Col>
-                <Col>{this.state.username}</Col>
+                <Col>{username}</Col>
               </Row>
               <Row>
                 <Col>Name: </Col>
-                <Col>{this.state.realname}</Col>
+                <Col>{realname}</Col>
               </Row>
               <Row>
                 <Col>Level: </Col>
-                <Col>{this.state.tier}</Col>
+                <Col>{tier}</Col>
               </Row>
               <Row>
                 <Col>Email: </Col>
-                <Col>{this.state.email}</Col>
+                <Col>{email}</Col>
               </Row>
             </CardPanel>
           </Col>
         </Row>
       </div>
-    )
-  }
+    </div>
+  )
 }
 
-const mapStateToProps = (store) => {
-  return {
-    user: store.user
-  }
-}
-
-const ConnectedSettings = connect(
-  mapStateToProps
-)(Settings)
-
-export default ConnectedSettings
+export default Settings
