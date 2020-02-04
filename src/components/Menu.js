@@ -29,7 +29,6 @@ const Menu = (props) => {
 }
 
 const clickHome = (props) => {
-  console.log('KLIK')
   props.filter.setFilter('')
   props.history.push('/')
 }
