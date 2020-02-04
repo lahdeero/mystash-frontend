@@ -9,7 +9,7 @@ import versionResolver from '../utils/versionResolver'
 const Menu = (props) => {
   return (
     <div>
-      <Navbar className='indigo' brand={`mystash v. ${versionResolver}`} href={`#`} onClick={() => clickHome(props)} right>
+      <Navbar className='indigo' brand={<a className="brand-logo" href="#" onClick={() => clickHome(props)}>Mystash</a>} right>
         <IndexLinkContainer to='/'>
           <NavItem eventkey={1} onClick={() => props.filter.setFilter('')}><Icon>view_list</Icon></NavItem>
         </IndexLinkContainer>
@@ -29,6 +29,7 @@ const Menu = (props) => {
 }
 
 const clickHome = (props) => {
+  console.log('KLIK')
   props.filter.setFilter('')
   props.history.push('/')
 }
