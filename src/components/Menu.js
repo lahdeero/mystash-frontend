@@ -9,7 +9,7 @@ import versionResolver from '../utils/versionResolver'
 const Menu = (props) => {
   return (
     <div>
-      <Navbar className='indigo' brand={<GotoRootAndClearFilter history={props.history} filter={props.filter} />} right>
+      <Navbar className='indigo' brand={`mystash v. ${versionResolver}`} href={`#`} onClick={() => props.filter.setFilter('') && props.history.push('/')} right>
         <IndexLinkContainer to='/'>
           <NavItem eventkey={1} onClick={() => props.filter.setFilter('')}><Icon>view_list</Icon></NavItem>
         </IndexLinkContainer>
@@ -25,18 +25,6 @@ const Menu = (props) => {
       </Navbar>
       <Filter filter={props.filter} />
     </div >
-  )
-}
-
-// <Link to='/' > mystash v. {versionResolver}</Link>
-const GotoRootAndClearFilter = (props) => {
-  return (
-    <div>
-      <a href='#' onClick={() => {
-        props.filter.setFilter('')
-        props.history.push('/')
-      }}>mystash v. {versionResolver} </a>
-    </div>
   )
 }
 

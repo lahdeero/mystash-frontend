@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Button } from 'react-materialize'
 import { Link } from 'react-router-dom'
+import ReactMarkddown from 'react-markdown'
 import noteService from '../../services/NoteService.js'
 import { removeNote } from '../../reducers/noteReducer'
 import { notify, errormessage } from '../../reducers/notificationReducer'
@@ -20,7 +21,7 @@ class Show extends React.Component {
   async componentDidMount() {
     try {
       const note = await noteService.getOne(this.props.match.params.id)
-      await this.setState({
+      this.setState({
         id: note.id,
         title: note.title,
         content: note.content,
@@ -46,21 +47,29 @@ class Show extends React.Component {
   render() {
     const tags = this.state.tags.join()
     const text = this.state.content
+    console.log(tags)
+    const markdown = tags.includes('markdown')
+
+    console.log('markdown boolean', markdown)
 
     return (
       <div className="container">
         <h2>{this.state.title}</h2>
         <p>[{tags}]</p>
-        <div>
-          {text.split('\n').map(function (row, key) {
-            return (
-              <span key={key}>
-                {row}
-                <br />
-              </span>
-            )
-          })}
-        </div>
+        {markdown &&
+          <ReactMarkddown source={text} />}
+        {!markdown &&
+          <div>
+            {text.split('\n').map(function (row, key) {
+              return (
+                <span key={key}>
+                  {row}
+                  <br />
+                </span>
+              )
+            })}
+          </div>
+        }
         <div>
           <Link to={`/notes/edit/${this.state.id}'`}>
             <Button className="deep orange">EDIT</Button>&nbsp;
