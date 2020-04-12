@@ -9,7 +9,7 @@ import versionResolver from '../utils/versionResolver'
 const Menu = (props) => {
   return (
     <div>
-      <Navbar className='indigo' brand={Logo(props)} href='#' right>
+      <Navbar className='indigo' brand={Logo(props)} href='#!' right>
         <IndexLinkContainer to='/'>
           <NavItem eventkey={1}><Icon>view_list</Icon></NavItem>
         </IndexLinkContainer>

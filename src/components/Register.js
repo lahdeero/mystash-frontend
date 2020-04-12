@@ -17,20 +17,32 @@ const Register = (props) => {
     event.preventDefault()
     setLoading(true)
     try {
-      await props.actionForRegister({
+      const response = await props.actionForRegister({
         realname: firstname + ' ' + lastname,
         username: username,
         password: password,
         email: email
       })
-      props.init()
+      console.log('response:', response)
+      if (response.error) {
+        setError(response.error)
+        setLoading(false)
+        setTimeout(() => {
+          setError('')
+        }, 10000)
+      } else {
+        props.init()
+      }
     } catch (exception) {
       setLoading(false)
       console.log(exception)
-      setError('Username not available')
-      setTimeout(() => {
-        setError('')
-      }, 5000)
+      console.log('type: ', typeof (exception))
+      if (error.length === 0) {
+        setError(exception.message)
+        setTimeout(() => {
+          setError('')
+        }, 10000)
+      }
     }
   }
 
