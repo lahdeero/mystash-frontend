@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 import { connect } from 'react-redux'
+import queryString from 'query-string'
 import './App.css'
 import Menu from './components/Menu'
 import Login from './components/Login'
@@ -21,6 +22,10 @@ const App = (props) => {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
+    const parsed = queryString.parse(window.location.search)
+    if (parsed.token) {
+      window.localStorage.setItem('MS_token', parsed.token)
+    }
     const loggedUserJSON = window.localStorage.getItem('MS_token')
     if (!logged && loggedUserJSON) {
       setLogged(true)

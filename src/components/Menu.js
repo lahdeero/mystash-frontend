@@ -9,7 +9,7 @@ import versionResolver from '../utils/versionResolver'
 const Menu = (props) => {
   return (
     <div>
-      <Navbar className='indigo' brand={<a className="brand-logo" href="#" onClick={() => clickHome(props)}>Mystash</a>} right>
+      <Navbar className='indigo' brand={Logo(props)} href='#!' right>
         <IndexLinkContainer to='/'>
           <NavItem eventkey={1} onClick={() => props.filter.setFilter('')}><Icon>view_list</Icon></NavItem>
         </IndexLinkContainer>
@@ -28,9 +28,17 @@ const Menu = (props) => {
   )
 }
 
-const clickHome = (props) => {
-  props.filter.setFilter('')
-  props.history.push('/')
+const Logo = (props) => {
+  const clickHome = (props) => {
+    props.filter.setFilter('')
+    props.history.push('/')
+  }
+
+  return (
+    <div onClick={() => clickHome(props)}>
+      mystash v. {versionResolver}
+    </div>
+  )
 }
 
 export default withRouter(connect(null)(Menu))

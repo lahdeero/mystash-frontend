@@ -55,6 +55,7 @@
     "postcss-preset-env": "6.5.0",
     "postcss-safe-parser": "4.0.1",
     "prop-types": "^15.6.2",
+    "query-string": "^6.12.1",
     "react": "^16.4.2",
     "react-app-polyfill": "^0.2.1",
     "react-dev-utils": "^7.0.3",
@@ -83,7 +84,7 @@
   "browserslist": [
     "last 1 Chrome versions"
   ],
-  "proxy": "http://localhost:3001",
+  "proxy": "http://localhost:8080",
   "jest": {
     "verbose": true,
     "collectCoverageFrom": [

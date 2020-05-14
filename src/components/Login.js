@@ -1,8 +1,10 @@
 import React, { useState } from 'react'
+import * as queryString from 'query-string'
 import { Navbar, Input, Icon, Button } from 'react-materialize'
 import Register from './Register'
 import { ClipLoader } from 'react-spinners'
 import '../App.css'
+import { resolveUrl } from '../utils/environmentResolvers'
 
 const Login = (props) => {
   const [username, setUsername] = useState('')
@@ -40,11 +42,26 @@ const Login = (props) => {
       </div>
     )
   }
+  const params = queryString.stringify({
+    client_id: 'bbb7a9d3a5bb7895e06e',
+    redirect_uri: 'http://localhost:8080/api/login/github/callback',
+    scope: ['read:user', 'user:email'].join(' '), // space seperated string
+    allow_signup: true
+  })
+
+  const backendUrl = resolveUrl()
+  const githubLoginUrl = `${backendUrl}/api/login/github?${params}`
+
   return (
     <div>
       <Navbar className="indigo" brand='mystash' href={process.env.PUBLIC_URL} right>
       </Navbar>
       <div className="container centered">
+        <div>
+          <a href={githubLoginUrl}>
+            Login with GitHub
+          </a>
+        </div>
         <ClipLoader loading={loading} color='blue' />
         {error !== '' ? <div className="error">{error}</div> : <div></div>}
         <form onSubmit={handleLogin}>
@@ -75,7 +92,7 @@ const Login = (props) => {
           Dont have account? <a onClick={handleRegisterRedirect} href="/register">Register here</a>
         </div>
       </div>
-    </div>
+    </div >
   )
 }
 
