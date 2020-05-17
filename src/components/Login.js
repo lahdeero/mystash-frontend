@@ -42,15 +42,10 @@ const Login = (props) => {
       </div>
     )
   }
-  const params = queryString.stringify({
-    client_id: 'bbb7a9d3a5bb7895e06e',
-    redirect_uri: 'http://localhost:8080/api/login/github/callback',
-    scope: ['read:user', 'user:email'].join(' '), // space seperated string
-    allow_signup: true
-  })
 
   const backendUrl = resolveUrl()
-  const githubLoginUrl = `${backendUrl}/api/login/github?${params}`
+  console.log('backend url:', backendUrl)
+  const githubLoginUrl = `${backendUrl}/api/login/github`
 
   return (
     <div>
