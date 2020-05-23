@@ -24,8 +24,8 @@ const create = async (newObject) => {
 const modify = async (noteObject) => {
   const id = noteObject.id
   console.log('noteObject:', noteObject)
-  const request = await API.put(baseUrl + '/note/' + id, noteObject, getRequestConfig())
-  return request
+  const response = await API.put(baseUrl + '/note/' + id, noteObject, getRequestConfig())
+  return response
 }
 
 const erase = async (id) => {

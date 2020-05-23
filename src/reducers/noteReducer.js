@@ -5,7 +5,7 @@ const noteReducer = (store = [], action) => {
     case 'CREATE':
       return [action.data, ...store.slice(0, store.length)]
     case 'MODIFY':
-      return store.map(note => (note.id === action.data.id) ? action.data : note)
+      return store.map(note => note.id === action.data.data.id ? action.data.data : note)
     case 'REMOVE':
       return store.filter(note => note.id !== action.data)
     case 'INIT_NOTES':
@@ -50,9 +50,9 @@ export const createNote = (noteObject) => {
 
 export const modifyNote = (noteObject) => {
   return async (dispatch) => {
-    await noteService.modify(noteObject)
-    const modifiedNoteObject = await noteService.getOne(noteObject.id)
-    await dispatch({
+    const modifiedNoteObject = await noteService.modify(noteObject)
+    // const modifiedNoteObject = await noteService.getOne(noteObject.id)
+    dispatch({
       type: 'MODIFY',
       data: modifiedNoteObject
     })
