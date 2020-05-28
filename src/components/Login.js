@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import * as queryString from 'query-string'
 import { Navbar, Input, Icon, Button } from 'react-materialize'
 import Register from './Register'
 import { ClipLoader } from 'react-spinners'
