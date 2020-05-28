@@ -6,12 +6,12 @@ const backendUrl = resolveUrl()
 const baseUrl = backendUrl + '/api/notes/directory'
 
 const getAll = async () => {
-  const response = await API.get(baseUrl + '/all', getRequestConfig())
+  const response = await API.get(`${baseUrl}/all`, getRequestConfig())
   return response.data
 }
 
 const getOne = async (noteId) => {
-  const response = await API.get(baseUrl + '/note/' + noteId, getRequestConfig())
+  const response = await API.get(`${baseUrl}/note/${noteId}`, getRequestConfig())
   return response.data
 }
 
@@ -22,9 +22,7 @@ const create = async (newObject) => {
 }
 
 const modify = async (noteObject) => {
-  const id = noteObject.id
-  console.log('noteObject:', noteObject)
-  const response = await API.put(baseUrl + '/note/' + id, noteObject, getRequestConfig())
+  const response = await API.put(`${baseUrl}/note/${noteObject.id}`, noteObject, getRequestConfig())
   return response.data
 }
 

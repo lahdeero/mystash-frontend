@@ -36,7 +36,7 @@ class Form extends React.Component {
     let newTags = this.state.tags
     newTags.push(this.state.tagText)
     try {
-      await this.setState({
+      this.setState({
         tags: newTags,
         tagText: ''
       })
@@ -57,12 +57,12 @@ class Form extends React.Component {
     // If user didnt hit "Add tag" but there's text in "add tag field"
     if ((this.state.tags === undefined || this.state.tags.length === 0) && this.state.tagText.length > 0) {
       const newTags = this.state.tagText.split(';')
-      await this.setState({
+      this.setState({
         tags: newTags
       })
     }
     try {
-      const noteObject = await {
+      const noteObject = {
         title: this.state.title,
         content: this.state.content,
         tags: this.state.tags

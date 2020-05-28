@@ -43,7 +43,7 @@ class Edit extends React.Component {
   handleSubmit = async (event) => {
     event.preventDefault()
     try {
-      const noteObject = await {
+      const noteObject = {
         id: this.state.id,
         title: this.state.title,
         content: this.state.content,
@@ -68,15 +68,15 @@ class Edit extends React.Component {
 
   addTag = async (event) => {
     event.preventDefault()
-    const maxTags = await 4
+    const maxTags = 4
     if (this.state.tagText.length === 0 || this.state.tags.includes(this.state.tagText)) return
-    let newTags = await this.state.tags
-    await newTags.push(this.state.tagText)
+    let newTags = this.state.tags
+    newTags.push(this.state.tagText)
     if (newTags.length > maxTags) {
       this.props.notify(`Maxium number of tags is '${maxTags}'`, 10)
     } else {
       try {
-        await this.setState({
+        this.setState({
           tags: newTags,
           tagText: ''
         })
