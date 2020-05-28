@@ -7,6 +7,7 @@ const baseUrl = backendUrl + '/api/notes/directory'
 
 const getAll = async () => {
   const response = await API.get(`${baseUrl}/all`, getRequestConfig())
+  console.log(response)
   return response.data
 }
 
