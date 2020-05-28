@@ -16,15 +16,16 @@ const getOne = async (noteId) => {
 }
 
 const create = async (newObject) => {
-  const request = await API.post(baseUrl, newObject, getRequestConfig())
-  console.log(request)
-  return request.data
+  const response = await API.post(baseUrl, newObject, getRequestConfig())
+  console.log(response)
+  return response.data
 }
 
 const modify = async (noteObject) => {
   const id = noteObject.id
   console.log('noteObject:', noteObject)
-  return API.put(baseUrl + '/note/' + id, noteObject, getRequestConfig())
+  const response = await API.put(baseUrl + '/note/' + id, noteObject, getRequestConfig())
+  return response.data
 }
 
 const erase = async (id) => {
