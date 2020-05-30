@@ -62,6 +62,8 @@ const List = (props) => {
   }
 
   const filteredNotes = filterNotes(props.notes.sort(sortFunction), props.filter.value)
+  console.log('sorted!')
+  console.log('filteredNotes', filteredNotes)
   const notesToShow = filteredNotes.slice((page - 1) * notesPerPage, (page - 1) * notesPerPage + notesPerPage)
 
   return (

@@ -18,7 +18,7 @@ const getOne = async (noteId) => {
 
 const create = async (newObject) => {
   const response = await API.post(baseUrl, newObject, getRequestConfig())
-  console.log(response)
+  // console.log(response.data)
   return response.data
 }
 

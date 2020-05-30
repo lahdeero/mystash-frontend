@@ -3,7 +3,9 @@ import noteService from '../services/NoteService.js'
 const noteReducer = (store = [], action) => {
   switch (action.type) {
     case 'CREATE':
-      return [action.data, ...store.slice(0, store.length)]
+      const foo = [action.data, ...store.slice(0, store.length)]
+      console.log(foo)
+      return foo
     case 'MODIFY':
       return store.map(note => note.id === action.data.id ? action.data : note)
     case 'REMOVE':
@@ -39,13 +41,12 @@ export const clearNotes = () => {
 
 export const createNote = (noteObject) => {
   return async (dispatch) => {
-    const savedNoteObject = await noteService.create(noteObject)
-    const returnedNoteObject = await noteService.getOne(savedNoteObject.id)
-    dispatch({
+    const createdNoteObject = await noteService.create(noteObject)
+    await dispatch({
       type: 'CREATE',
-      data: returnedNoteObject
+      data: createdNoteObject
     })
-    return returnedNoteObject
+    return createdNoteObject
   }
 }
 

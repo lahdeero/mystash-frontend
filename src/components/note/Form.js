@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { withRouter } from 'react-router-dom'
 import Textarea from 'react-textarea-autosize'
 import { connect } from 'react-redux'
@@ -6,122 +6,109 @@ import { Button } from 'react-materialize'
 import { createNote } from '../../reducers/noteReducer'
 import { notify, errormessage } from '../../reducers/notificationReducer'
 
-class Form extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      isMounted: false,
-      tagText: '',
-      title: '',
-      content: '',
-      tags: []
-    }
-  }
+const Form = (props) => {
+  const { createNote, notify, errormessage } = props
+  const [title, setTitle] = useState('')
+  const [content, setContent] = useState('')
+  const [tags, setTags] = useState([])
+  const [tagText, setTagText] = useState('')
 
-  handleChange = (event) => {
-    this.setState({ [event.target.name]: event.target.value })
-  }
-  handleContent = (event) => {
-    this.setState({ content: event.target.value })
-  }
-
-  addTag = async (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault()
-    const maxTags = 10
-    if (this.state.tags.length >= maxTags) {
-      this.props.notify(`Maxium number of tags is '${maxTags}'`, 10)
-      return
-    }
-    if (this.state.tagText.length === 0 || this.state.tags.includes(this.state.tagText)) return
-    let newTags = this.state.tags
-    newTags.push(this.state.tagText)
     try {
-      this.setState({
-        tags: newTags,
-        tagText: ''
-      })
-    } catch (exception) {
-      this.props.errormessage('ERROR WHILE ADDING TAG', 10)
-    }
-  }
-
-  removeTag(name) {
-    this.setState({
-      tags: this.state.tags.filter(tag => tag !== name)
-    })
-  }
-
-  handleSubmit = async (event) => {
-    event.preventDefault()
-    // console.log('click')
-    // If user didnt hit "Add tag" but there's text in "add tag field"
-    if ((this.state.tags === undefined || this.state.tags.length === 0) && this.state.tagText.length > 0) {
-      const newTags = this.state.tagText.split(';')
-      this.setState({
-        tags: newTags
-      })
-    }
-    try {
-      const noteObject = {
-        title: this.state.title,
-        content: this.state.content,
-        tags: this.state.tags
+      if (tagText.length > 2) {
+        const newTags = tags.concat(tagText.split(';'))
+        setTags(newTags)
       }
-      const createdNote = await this.props.createNote(noteObject)
-      this.props.notify(`you created '${createdNote.title}'`, 10)
-      this.setState({
-        title: '',
-        content: '',
-        tag_id: ''
-      })
-      // await this.setState({ redirect_url: '/notes/' + id })
-      this.props.history.push('/')
+      const noteObject = {
+        title: title,
+        content: content,
+        tags: tags
+      }
+      if (noteObject.tags >= 0) {
+        props.notify('Add atleast one tag', 10)
+        return
+      }
+      createNote(noteObject).then(() => {
+        props.history.push('/')
+      }, props.notify(`you created '${noteObject.title}'`, 10))
     } catch (exception) {
       console.log(exception)
-      this.props.errormessage('ERROR WHILE ADDING NOTE', 10)
+      props.errormessage('ERROR WHILE ADDING NOTE', 10)
     }
   }
 
-  render() {
-    return (
-      <div className="container">
-        <h2>Create new note</h2>
-
-        <form id="noteform" onSubmit={this.handleSubmit}>
-          <div>
-            Title<br />
-            <input name='title' value={this.state.title} onChange={this.handleChange} />
-          </div>
-          <div>
-            <label>
-              Content<br />
-              <Textarea className="note-edit" value={this.state.content} onChange={this.handleContent} minRows={10} />
-            </label>
-          </div>
-          <br />
-        </form>
-
-        <div>
-          {this.state.tags.map(tag =>
-            <Button key={tag} onClick={() => { this.removeTag(tag) }}> {tag} </Button>
-          )}
-        </div>
-
-        <form id="tagform" onSubmit={this.addTag}>
-          <Button className="deep orange" type="submit" form="tagform">Add tag</Button>
-          <div>
-            <br />
-            <input name='tagText' value={this.state.tagText} onChange={this.handleChange} />
-          </div>
-        </form>
-
-        <div>
-          <br />
-          <Button form="noteform" className="red accent-2" type="submit">Create</Button>
-        </div>
-      </div>
-    )
+  const handleChange = (event) => {
+    // setState({ [event.target.name]: event.target.value })
+    event.target.name === 'title' ? setTitle(event.target.value) : setTagText(event.target.value)
   }
+  const handleContent = (event) => {
+    // setState({ content: event.target.value })
+    setContent(event.target.value)
+  }
+
+  const addTag = (event) => {
+    event.preventDefault()
+    const maxTags = 10
+    if (tags.length >= maxTags) {
+      notify(`Maxium number of tags is '${maxTags}'`, 10)
+      return
+    }
+    if (tagText.length === 0 || tags.includes(tagText)) return
+    try {
+      console.log('tagText:', tagText)
+      const newTags = tags.concat(tagText.split(';'))
+      // newTags = newTags.concat(tagText.split(';'))
+      setTags(newTags)
+      setTagText('')
+    } catch (exception) {
+      errormessage('ERROR WHILE ADDING TAG', 10)
+    }
+  }
+
+  const removeTag = (name) => {
+    setTags(tags.filter(tag => tag !== name))
+  }
+
+  return (
+    <div className="container">
+      <h2>Create new note</h2>
+
+      <form id="noteform" onSubmit={handleSubmit}>
+        <div>
+          Title<br />
+          <input name='title' value={title} onChange={handleChange} />
+        </div>
+        <div>
+          <label>
+            Content<br />
+            <Textarea className="note-edit" value={content} onChange={handleContent} minRows={10} />
+          </label>
+        </div>
+        <br />
+      </form>
+
+      <div>
+        {tags.map(tag =>
+          <Button key={tag} onClick={() => { removeTag(tag) }}> {tag} </Button>
+        )}
+      </div>
+
+      <form id="tagform" onSubmit={addTag}>
+        <Button className="deep orange" type="submit" form="tagform">Add tag</Button>
+        <div>
+          <br />
+          <input name='tagText' value={tagText} onChange={handleChange} />
+        </div>
+      </form>
+
+      <div>
+        <br />
+        <Button form="noteform" className="red accent-2" type="submit">Create</Button>
+      </div>
+    </div>
+
+  )
 }
 
 const mapDispatchToProps = {
