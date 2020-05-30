@@ -68,7 +68,7 @@ class Show extends React.Component {
           </div>
         }
         <div>
-          <Link to={`/notes/edit/${this.state.id}'`}>
+          <Link to={`/notes/edit/${this.state.id}`}>
             <Button className="deep orange">EDIT</Button>&nbsp;
           </Link>
           <Button className="red accent-2" onClick={this.deleteNote} >DELETE</Button>

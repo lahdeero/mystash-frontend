@@ -16,14 +16,10 @@ const Form = (props) => {
   const handleSubmit = (event) => {
     event.preventDefault()
     try {
-      if (tagText.length > 2) {
-        const newTags = tags.concat(tagText.split(';'))
-        setTags(newTags)
-      }
       const noteObject = {
         title: title,
         content: content,
-        tags: tags
+        tags: tagText.length > 2 ? tags.concat(tagText.split(';')) : tags
       }
       if (noteObject.tags >= 0) {
         props.notify('Add atleast one tag', 10)

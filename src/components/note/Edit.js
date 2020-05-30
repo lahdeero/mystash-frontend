@@ -68,7 +68,7 @@ class Edit extends React.Component {
 
   addTag = async (event) => {
     event.preventDefault()
-    const maxTags = 4
+    const maxTags = 10
     if (this.state.tagText.length === 0 || this.state.tags.includes(this.state.tagText)) return
     let newTags = this.state.tags
     newTags.push(this.state.tagText)
