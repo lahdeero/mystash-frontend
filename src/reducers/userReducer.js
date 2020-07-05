@@ -16,8 +16,8 @@ const userReducer = (store = null, action) => {
 export const actionForRegister = (information) => {
   return async dispatch => {
     const response = await loginService.register(information)
-    const user = await loginService.getUser()
     window.localStorage.setItem('MS_token', response.token)
+    const user = await loginService.getUser()
     dispatch({
       type: 'REGISTER',
       data: user

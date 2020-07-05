@@ -18,7 +18,7 @@ const Register = (props) => {
     setLoading(true)
     try {
       await props.actionForRegister({
-        realname: firstname + ' ' + lastname,
+        realname: `${firstname} ${lastname}`,
         username: username,
         password: password,
         email: email
@@ -27,7 +27,7 @@ const Register = (props) => {
     } catch (exception) {
       setLoading(false)
       console.log(exception)
-      setError('Username not available')
+      setError('Could not register..')
       setTimeout(() => {
         setError('')
       }, 5000)
